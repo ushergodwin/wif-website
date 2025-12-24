@@ -1,12 +1,9 @@
 import "./bootstrap";
 import "bootstrap";
 import "animate.css";
-import { WOW } from "wowjs";
 import "./utils";
 import { subscribeToNewsletter } from "./client-requests";
 // Add any custom JavaScript here
-//wow
-new WOW().init();
 // Initialize tooltips globally
 var tooltipTriggerList = [].slice.call(
     document.querySelectorAll('[data-bs-toggle="tooltip"]')
