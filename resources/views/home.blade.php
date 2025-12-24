@@ -32,11 +32,11 @@
                             <div class="col-lg-8 mx-auto text-center">
                                 <div class="carousel-content">
                                     @if($item->overlay_text)
-                                        <h1 class="carousel-title">{{ strip_tags($item->overlay_text) }}</h1>
+                                        <h1 class="carousel-title animate__animated animate__slideInUp">{{ strip_tags($item->overlay_text) }}</h1>
                                     @endif
                                     @if($item->button_text && $item->button_url)
                                     <a href="{{ $item->button_url }}" 
-                                       class="btn btn-accent-yellow btn-lg mt-4"
+                                       class="btn btn-accent-yellow btn-lg mt-4 animate__animated animate__fadeInUp"
                                        @if(filter_var($item->button_url, FILTER_VALIDATE_URL)) target="_blank" rel="noopener noreferrer" @endif>
                                         {{ $item->button_text }}
                                     </a>
@@ -89,7 +89,7 @@
 <section class="section-padding {{ $section->background_color == 'light' ? 'bg-light' : ($section->background_color == 'primary' ? 'bg-primary text-white' : ($section->background_color == 'secondary' ? 'bg-secondary text-white' : '')) }}">
     <div class="container">
         <div class="row">
-            <div class="col-lg-8">
+            <div class="col-lg-8 animate__animated animate__fadeInLeft">
                 @if($section->title)
                 <h2 class="mb-4">{{ $section->title }}</h2>
                 @endif
@@ -101,7 +101,7 @@
                 @endif
                 <a href="{{ route('about') }}" class="btn btn-primary mt-3">Learn More</a>
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-4 animate__animated animate__fadeInRight">
                 @if($section->image)
                 <img src="{{ $section->image_url }}" alt="{{ $section->title ?? 'About WIF' }}" class="img-fluid rounded">
                 @else
@@ -116,7 +116,7 @@
 <!-- Featured Projects -->
 <section class="section-padding">
     <div class="container">
-        <div class="row mb-5">
+        <div class="row mb-5 animate__animated animate__fadeIn">
             <div class="col-12 text-center">
                 @if(isset($pageSections['featured-projects']))
                 <h2 class="mb-3">{{ $pageSections['featured-projects']->title ?? 'Featured Projects' }}</h2>
@@ -134,7 +134,7 @@
         <div class="row">
             @forelse($featuredProjects as $project)
             <div class="col-md-4 mb-4">
-                <div class="card h-100">
+                <div class="card h-100 animate__animated animate__fadeIn">
                     @if($project->featured_image_url)
                     <img src="{{ $project->featured_image_url }}" class="card-img-top" alt="{{ $project->title }}">
                     @else
@@ -164,7 +164,7 @@
 <!-- Testimonials -->
 <section class="section-padding bg-light">
     <div class="container">
-        <div class="row mb-5">
+        <div class="row mb-5 animate__animated animate__fadeIn">
             <div class="col-12 text-center">
                 @if(isset($pageSections['testimonials']))
                 <h2 class="mb-3">{{ $pageSections['testimonials']->title ?? 'What Our Participants Say' }}</h2>
@@ -182,7 +182,7 @@
         <div class="row">
             @forelse($testimonials as $testimonial)
             <div class="col-md-4 mb-4">
-                <div class="card shadow h-100">
+                <div class="card shadow h-100 animate__animated animate__slideInUp">
                     <div class="card-header bg-transparent border-0 pb-0">
                         <div class="d-flex">
                             <div class="flex-shrink-0">
@@ -227,7 +227,7 @@
 <!-- Partners -->
 <section class="section-padding">
     <div class="container">
-        <div class="row mb-5">
+        <div class="row mb-5 animate__animated animate__fadeIn">
             <div class="col-12 text-center">
                 @if(isset($pageSections['partners']))
                 <h2 class="mb-3">{{ $pageSections['partners']->title ?? 'Our Partners' }}</h2>
@@ -245,7 +245,7 @@
         <div class="row align-items-center justify-content-center g-4">
             @forelse($partners as $partner)
             <div class="col-lg-2 col-md-3 col-sm-4 col-6">
-                <div class="partner-logo-wrapper">
+                <div class="partner-logo-wrapper animate__animated animate__slideInUp">
                     @if($partner->logo_url)
                     <a href="{{ $partner->website_url ?? '#' }}" 
                        target="{{ $partner->website_url ? '_blank' : '_self' }}"
@@ -274,7 +274,7 @@
 <!-- Latest Blog Posts -->
 <section class="section-padding bg-light shadow">
     <div class="container">
-        <div class="row mb-5">
+        <div class="row mb-5 animate__animated animate__fadeIn">
             <div class="col-12 text-center">
                 @if(isset($pageSections['latest-news']))
                 <h2 class="mb-3">{{ $pageSections['latest-news']->title ?? 'Latest News & Updates' }}</h2>
@@ -292,7 +292,7 @@
         <div class="row">
             @forelse($latestPosts as $post)
             <div class="col-md-4 mb-4">
-                <div class="card h-100">
+                <div class="card h-100 animate__animated animate__slideInUp">
                     @if($post->featured_image_url)
                     <img src="{{ $post->featured_image_url }}" class="card-img-top" alt="{{ $post->title }}">
                     @else
@@ -323,7 +323,7 @@
     </div>
 </section>
 <!-- Join Community Section -->
-<section class="section-padding bg-primary text-white">
+<section class="section-padding bg-primary text-white animate__animated animate__slideInDown">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 mx-auto text-center">

@@ -1,14 +1,17 @@
 import "./bootstrap";
 import "bootstrap";
+import "animate.css";
+import { WOW } from "wowjs";
 import "./utils";
 import { subscribeToNewsletter } from "./client-requests";
 // Add any custom JavaScript here
-
-// Example: Initialize tooltips globally
+//wow
+new WOW().init();
+// Initialize tooltips globally
 var tooltipTriggerList = [].slice.call(
     document.querySelectorAll('[data-bs-toggle="tooltip"]')
 );
-var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+tooltipTriggerList.map(function (tooltipTriggerEl) {
     return new bootstrap.Tooltip(tooltipTriggerEl);
 });
 

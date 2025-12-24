@@ -70,7 +70,7 @@
             <section class="card h-100 shadow">
                 <div class="card-body">
                     @if($section->title)
-                        <h2 class="mb-4 text-center text-primary">{{ $section->title }}</h2>
+                        <h2 class="mb-4 text-center text-dark">{{ $section->title }}</h2>
                     @endif
                     @if($section->subtitle)
                         <p class="lead">{{ $section->subtitle }}</p>
@@ -88,10 +88,10 @@
 <!-- Core Values -->
 @if(isset($pageSections['core-values']))
 @php $section = $pageSections['core-values']; @endphp
-<section class="section-padding {{ $section->background_color == 'light' ? 'bg-light' : ($section->background_color == 'primary' ? 'bg-primary text-white' : ($section->background_color == 'secondary' ? 'bg-secondary text-white' : '')) }}">
+<section class="section-padding bg-light">
     <div class="container">
         <div class="row mb-5">
-            <div class="col-12 text-center text-secondary">
+            <div class="col-12 text-center">
                 @if($section->title)
                 <h2 class="mb-4">{{ $section->title }}</h2>
                 @endif
@@ -104,10 +104,10 @@
         <div class="row">
             @foreach($section->items as $index => $item)
             <div class="col-md-6 mb-4">
-                <div class="card h-100 text-center shadow">
+                <div class="card h-100 text-center shadow bg-secondary text-white">
                     <div class="card-body">
                         @if($item['title'] ?? null)
-                        <h4 class="text-primary mb-3">{{ $index + 1 }}. {{ $item['title'] }}</h4>
+                        <h4 class="mb-3">{{ $index + 1 }}. {{ $item['title'] }}</h4>
                         @endif
                         @if($item['description'] ?? null)
                         <p>{{ $item['description'] }}</p>
@@ -169,8 +169,8 @@
 <!-- Work Plan -->
 @if(isset($pageSections['work-plan']))
 @php $section = $pageSections['work-plan']; @endphp
-<section class="section-padding {{ $section->background_color == 'light' ? 'bg-light' : ($section->background_color == 'primary' ? 'bg-primary text-white' : ($section->background_color == 'secondary' ? 'bg-secondary text-white' : '')) }}">
-    <div class="container">
+<section class="section-padding">
+    <div class="container card card-body bg-dark text-white shadow">
         <div class="row">
             <div class="col-lg-8 mx-auto">
                 @if($section->title)
@@ -210,7 +210,7 @@
         <div class="row">
             @foreach($boardOfDirectors as $director)
             <div class="col-md-4 col-sm-6 mb-4">
-                <div class="card h-100 text-center team-member-card">
+                <div class="card h-100 text-center team-member-card shadow">
                     @if($director->photo)
                     <img src="{{ $director->photo_url }}" class="card-img-top team-member-photo" alt="{{ $director->name }}">
                     @else
