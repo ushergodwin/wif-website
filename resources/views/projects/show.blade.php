@@ -122,21 +122,33 @@
 
     .project-section-content p:last-child { margin-bottom: 0; }
 
-    /* Video embed */
-    .project-video-wrapper {
-        position: relative;
-        padding-bottom: 56.25%;
-        height: 0;
-        overflow: hidden;
-        border-radius: 12px;
-    }
-
-    .project-video-wrapper iframe {
+    /* Video play button on hero */
+    .video-play-btn {
         position: absolute;
-        top: 0; left: 0;
-        width: 100%; height: 100%;
-        border: 0;
+        bottom: 2rem;
+        right: 2rem;
+        z-index: 3;
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        border: 3px solid rgba(255,255,255,0.85);
+        background: rgba(0,0,0,0.35);
+        backdrop-filter: blur(6px);
+        color: white;
+        font-size: 1.6rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.25s ease;
+        padding: 0;
     }
+    .video-play-btn:hover {
+        background: var(--primary);
+        border-color: white;
+        transform: scale(1.1);
+    }
+    .video-play-btn .bi-play-fill { margin-left: 4px; } /* optical centre */
 
     /* Gallery */
     .project-gallery-section {
@@ -299,6 +311,15 @@
             <h1 class="project-hero-title">{{ $project->title }}</h1>
         </div>
     </div>
+
+    @if($project->video_embed_url)
+    <button class="video-play-btn"
+            data-bs-toggle="modal"
+            data-bs-target="#videoModal"
+            aria-label="Watch video">
+        <i class="bi bi-play-fill"></i>
+    </button>
+    @endif
 </section>
 
 <!-- What's Happening / Announcement -->
@@ -350,20 +371,31 @@
             </div>
         </div>
 
-        @if($project->video_embed_url)
-        <!-- Video Card -->
+        {{-- Materials card --}}
+        @if($project->materials->count() > 0)
         <div class="project-section-card">
             <div class="project-section-header">
-                <div class="project-section-icon"><i class="bi bi-play-circle"></i></div>
-                <h2 class="project-section-title">Video</h2>
+                <div class="project-section-icon"><i class="bi bi-folder2-open"></i></div>
+                <h2 class="project-section-title">Project Materials</h2>
+                <span class="badge bg-secondary ms-auto">{{ $project->materials->count() }}</span>
             </div>
-            <div class="project-video-wrapper">
-                <iframe src="{{ $project->video_embed_url }}"
-                        allowfullscreen
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        title="{{ $project->title }} Video">
-                </iframe>
+            <p class="text-muted mb-3">Guides, documents, and resources available for this project.</p>
+            <div class="d-flex flex-wrap gap-2 mb-4">
+                @foreach($project->materials->take(4) as $material)
+                <div class="d-flex align-items-center gap-2 px-3 py-2 rounded-3 border" style="background:#f8f9fa;">
+                    <i class="bi {{ $material->file_icon }}" style="color:{{ $material->file_color }};font-size:1.15rem;"></i>
+                    <span class="small fw-semibold" style="max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">{{ $material->title }}</span>
+                </div>
+                @endforeach
+                @if($project->materials->count() > 4)
+                <div class="d-flex align-items-center px-3 py-2 text-muted small">
+                    +{{ $project->materials->count() - 4 }} more
+                </div>
+                @endif
             </div>
+            <a href="{{ route('projects.materials', $project->slug) }}" class="btn btn-primary">
+                <i class="bi bi-folder2-open me-2"></i>View All Materials
+            </a>
         </div>
         @endif
 
@@ -480,6 +512,31 @@
     </div>
 </section>
 
+<!-- Video Modal -->
+@if($project->video_embed_url)
+<div class="modal fade" id="videoModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content bg-black border-0">
+            <div class="modal-header border-0 pb-0 px-3 pt-2">
+                <span class="text-white fw-semibold small opacity-75">{{ $project->title }}</span>
+                <button type="button" class="btn-close btn-close-white ms-auto" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-2 pt-0">
+                <div class="ratio ratio-16x9">
+                    <iframe id="videoIframe"
+                            src=""
+                            data-src="{{ $project->video_embed_url }}"
+                            allowfullscreen
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            title="{{ $project->title }} Video">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endif
+
 <!-- Gallery Section -->
 @if($project->gallery_images_urls && count($project->gallery_images_urls) > 0)
 <section class="project-gallery-section">
@@ -529,6 +586,26 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+</script>
+@endpush
+@endif
+
+{{-- Video modal JS + apply form handler (outside gallery @if so they always load) --}}
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // Video modal: load src on open, stop video on close
+    var videoModal = document.getElementById('videoModal');
+    if (videoModal) {
+        var iframe = document.getElementById('videoIframe');
+        videoModal.addEventListener('show.bs.modal', function () {
+            iframe.src = iframe.getAttribute('data-src');
+        });
+        videoModal.addEventListener('hide.bs.modal', function () {
+            iframe.src = '';
+        });
+    }
+});
 
 handleFormSubmit('project-apply-form', {
     successTitle: 'Application Submitted!',
@@ -536,5 +613,4 @@ handleFormSubmit('project-apply-form', {
 });
 </script>
 @endpush
-@endif
 @endsection

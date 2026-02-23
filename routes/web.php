@@ -21,6 +21,7 @@ Route::get('/work-plan', [AboutController::class, 'workPlan'])->name('work-plan'
 
 // Projects
 Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');
+Route::get('/projects/{slug}/materials', [ProjectController::class, 'materials'])->name('projects.materials');
 Route::get('/projects/{slug}', [ProjectController::class, 'show'])->name('projects.show');
 Route::post('/projects/{slug}/apply', [ProjectApplicationController::class, 'store'])->name('projects.apply');
 

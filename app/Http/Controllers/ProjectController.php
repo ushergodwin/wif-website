@@ -29,4 +29,15 @@ class ProjectController extends Controller
 
         return view('projects.show', compact('project'));
     }
+
+    public function materials($slug)
+    {
+        $project = Project::where('slug', $slug)
+            ->where('is_active', true)
+            ->firstOrFail();
+
+        $materials = $project->materials()->get();
+
+        return view('projects.materials', compact('project', 'materials'));
+    }
 }

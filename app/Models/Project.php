@@ -58,6 +58,13 @@ class Project extends Model
         });
     }
 
+    public function materials(): HasMany
+    {
+        return $this->hasMany(ProjectMaterial::class)
+            ->where('is_active', true)
+            ->orderBy('order');
+    }
+
     public function galleryItems(): HasMany
     {
         return $this->hasMany(GalleryItem::class);
