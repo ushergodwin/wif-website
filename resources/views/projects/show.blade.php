@@ -205,15 +205,6 @@
         margin-left: auto;
     }
 
-    /* Breadcrumb */
-    .project-breadcrumb .breadcrumb-item a {
-        color: rgba(255,255,255,0.85);
-        text-decoration: none;
-    }
-    .project-breadcrumb .breadcrumb-item a:hover { color: white; }
-    .project-breadcrumb .breadcrumb-item.active { color: rgba(255,255,255,0.7); }
-    .project-breadcrumb .breadcrumb-item + .breadcrumb-item::before { color: rgba(255,255,255,0.5); }
-
     /* Back button */
     .back-to-projects {
         display: inline-flex;
@@ -236,7 +227,7 @@
 
     /* Application form */
     .apply-section {
-        background: linear-gradient(135deg, var(--primary) 0%, #a82519 100%);
+        background: linear-gradient(135deg, var(--primary) 0%, #390e01 100%);
         border-radius: 16px;
         padding: 2.5rem;
         color: white;
@@ -297,14 +288,6 @@
     @endif
     <div class="project-hero-content">
         <div class="container">
-            <nav aria-label="breadcrumb" class="mb-3">
-                <ol class="breadcrumb project-breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('projects.index') }}">Projects</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">{{ Str::limit($project->title, 40) }}</li>
-                </ol>
-            </nav>
-
             @if($project->event_date || $project->event_location)
             <div class="project-event-info">
                 <i class="bi bi-calendar-event"></i>
@@ -317,6 +300,26 @@
         </div>
     </div>
 </section>
+
+<!-- What's Happening / Announcement -->
+@if($project->announcement_text)
+<div class="project-announcement">
+    <div class="container">
+        <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+            <p class="mb-0 fw-semibold">
+                <i class="fas fa-bullhorn me-2 text-primary"></i>{{ $project->announcement_text }}
+            </p>
+            @if($project->announcement_link)
+            <a href="{{ $project->announcement_link }}" target="_blank" rel="noopener noreferrer"
+               class="btn btn-sm btn-primary flex-shrink-0">
+                {{ $project->announcement_link_label ?: 'Latest Updates' }}
+                <i class="fas fa-external-link-alt ms-1"></i>
+            </a>
+            @endif
+        </div>
+    </div>
+</div>
+@endif
 
 <!-- Flash message -->
 @if(session('success'))

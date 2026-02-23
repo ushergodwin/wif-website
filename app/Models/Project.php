@@ -27,6 +27,9 @@ class Project extends Model
         'application_form_url',
         'event_date',
         'event_location',
+        'announcement_text',
+        'announcement_link',
+        'announcement_link_label',
     ];
 
     protected $casts = [

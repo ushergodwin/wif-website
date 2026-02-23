@@ -13,28 +13,30 @@
     /* ── Section wrapper ── */
     .projects-scroll-section { padding: 60px 0; }
 
-    /* ── Scroll track ── */
+    /* ── Scroll track wrapper (clips the animated belt) ── */
     .projects-scroll-track-wrapper {
-        position: relative;
+        overflow: hidden;
     }
 
+    /* ── Scroll track (auto-scrolling belt) ── */
+    @keyframes scrollProjects {
+        0%   { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
+    }
     .projects-scroll-track {
         display: flex;
         gap: 1.5rem;
-        overflow-x: auto;
-        scroll-snap-type: x mandatory;
-        scroll-behavior: smooth;
-        -webkit-overflow-scrolling: touch;
-        padding: 0.5rem 0.25rem 1.5rem; /* bottom for scrollbar clearance */
-        /* hide scrollbar visually */
-        scrollbar-width: none;
+        padding: 0.5rem 0 1rem;
+        animation: scrollProjects 30s linear infinite;
+        will-change: transform;
     }
-    .projects-scroll-track::-webkit-scrollbar { display: none; }
+    .projects-scroll-track:hover {
+        animation-play-state: paused;
+    }
 
     /* ── Individual card ── */
     .project-card {
         flex: 0 0 320px;
-        scroll-snap-align: start;
         border-radius: 16px;
         overflow: hidden;
         background: #fff;
@@ -65,7 +67,7 @@
     .project-card:hover .project-card-img img { transform: scale(1.06); }
     .project-card-img-fallback {
         width: 100%; height: 100%;
-        background: linear-gradient(135deg, var(--primary) 0%, #a82519 100%);
+        background: linear-gradient(135deg, var(--primary) 0%, #390e01 100%);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -100,7 +102,6 @@
         color: var(--text-dark);
         margin-bottom: 0.5rem;
         line-height: 1.4;
-        /* clamp to 2 lines */
         display: -webkit-box;
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
@@ -113,7 +114,6 @@
         line-height: 1.6;
         margin-bottom: 1rem;
         flex: 1;
-        /* clamp to 3 lines */
         display: -webkit-box;
         -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;
@@ -129,34 +129,8 @@
         margin-top: auto;
     }
 
-    /* ── Scroll arrow buttons ── */
-    .scroll-arrow {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-60%); /* offset for the bottom padding */
-        z-index: 10;
-        width: 44px;
-        height: 44px;
-        border-radius: 50%;
-        border: none;
-        background: #fff;
-        color: var(--primary);
-        box-shadow: 0 2px 12px rgba(0,0,0,0.18);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        transition: background 0.2s, color 0.2s;
-        font-size: 1rem;
-    }
-    .scroll-arrow:hover { background: var(--primary); color: #fff; }
-    .scroll-arrow-left  { left: -22px; }
-    .scroll-arrow-right { right: -22px; }
-    .scroll-arrow.hidden { opacity: 0; pointer-events: none; }
-
     @media (max-width: 768px) {
         .project-card { flex: 0 0 280px; }
-        .scroll-arrow { display: none; } /* touch scroll handles it */
     }
 
     @media (min-width: 1200px) {
@@ -187,14 +161,6 @@
 
         @if($projects->count() > 0)
         <div class="projects-scroll-track-wrapper">
-            <!-- Arrows (hidden on mobile) -->
-            <button class="scroll-arrow scroll-arrow-left hidden" id="scrollLeft" aria-label="Scroll left">
-                <i class="fas fa-chevron-left"></i>
-            </button>
-            <button class="scroll-arrow scroll-arrow-right" id="scrollRight" aria-label="Scroll right">
-                <i class="fas fa-chevron-right"></i>
-            </button>
-
             <div class="projects-scroll-track" id="projectsTrack">
                 @foreach($projects as $project)
                 <div class="project-card">
@@ -251,33 +217,13 @@
 @push('scripts')
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    const track  = document.getElementById('projectsTrack');
-    const btnLeft  = document.getElementById('scrollLeft');
-    const btnRight = document.getElementById('scrollRight');
-    if (!track || !btnLeft || !btnRight) return;
-
-    const step = 400; // px per arrow click
-
-    function updateArrows() {
-        btnLeft.classList.toggle('hidden', track.scrollLeft <= 10);
-        btnRight.classList.toggle('hidden', track.scrollLeft + track.clientWidth >= track.scrollWidth - 10);
-    }
-
-    btnLeft.addEventListener('click', () => { track.scrollBy({ left: -step, behavior: 'smooth' }); });
-    btnRight.addEventListener('click', () => { track.scrollBy({ left: step, behavior: 'smooth' }); });
-    track.addEventListener('scroll', updateArrows);
-    updateArrows();
-
-    // Drag-to-scroll (desktop mouse drag)
-    let isDown = false, startX, scrollLeft;
-    track.addEventListener('mousedown', e => { isDown = true; track.classList.add('dragging'); startX = e.pageX - track.offsetLeft; scrollLeft = track.scrollLeft; });
-    track.addEventListener('mouseleave', () => { isDown = false; track.classList.remove('dragging'); });
-    track.addEventListener('mouseup', () => { isDown = false; track.classList.remove('dragging'); });
-    track.addEventListener('mousemove', e => {
-        if (!isDown) return;
-        e.preventDefault();
-        const x = e.pageX - track.offsetLeft;
-        track.scrollLeft = scrollLeft - (x - startX) * 1.5;
+    var track = document.getElementById('projectsTrack');
+    if (!track) return;
+    // Duplicate cards so the CSS keyframe loop is seamless
+    Array.from(track.children).forEach(function (card) {
+        var clone = card.cloneNode(true);
+        clone.setAttribute('aria-hidden', 'true');
+        track.appendChild(clone);
     });
 });
 </script>

@@ -19,14 +19,14 @@
             border: 1px solid #e5e7eb;
         }
         .welcome-banner {
-            background: linear-gradient(to right, #da3322, #c42e1f);
+            background: linear-gradient(to right, #4f1301, #390e01);
             border-radius: 0.75rem;
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
             padding: 1.5rem;
             color: white;
         }
         .info-section {
-            background: linear-gradient(to bottom right, #da3322, #c42e1f, #ae2819);
+            background: linear-gradient(to bottom right, #4f1301, #390e01, #280900);
             border-radius: 0.75rem;
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
             padding: 1.5rem;
@@ -141,7 +141,7 @@
                         Recent Blog Posts
                     </h3>
                     <a href="{{ route('filament.admin.resources.blog-posts.index') }}" 
-                       style="font-size: 0.875rem; font-weight: 500; color: #da3322; text-decoration: none;">
+                       style="font-size: 0.875rem; font-weight: 500; color: #4f1301; text-decoration: none;">
                         View All →
                     </a>
                 </div>
@@ -185,7 +185,7 @@
                     </h3>
                     @if(\Illuminate\Support\Facades\Route::has('filament.admin.resources.partner-inquiries.index'))
                         <a href="{{ route('filament.admin.resources.partner-inquiries.index') }}" 
-                           style="font-size: 0.875rem; font-weight: 500; color: #da3322; text-decoration: none;">
+                           style="font-size: 0.875rem; font-weight: 500; color: #4f1301; text-decoration: none;">
                             View All →
                         </a>
                     @endif
@@ -232,7 +232,7 @@
                 </p>
                 <div style="display: flex; flex-wrap: wrap; gap: 0.75rem;">
                     <a href="/" target="_blank" 
-                       style="display: inline-flex; align-items: center; padding: 0.625rem 1.25rem; background: rgba(255, 255, 255, 0.9); color: #da3322; border-radius: 0.5rem; text-decoration: none; font-weight: 500; transition: all 0.2s;"
+                       style="display: inline-flex; align-items: center; padding: 0.625rem 1.25rem; background: rgba(255, 255, 255, 0.9); color: #4f1301; border-radius: 0.5rem; text-decoration: none; font-weight: 500; transition: all 0.2s;"
                        onmouseover="this.style.background='white'; this.style.boxShadow='0 10px 15px -3px rgba(0, 0, 0, 0.1)';"
                        onmouseout="this.style.background='rgba(255, 255, 255, 0.9)'; this.style.boxShadow='none';">
                         <span style="margin-right: 0.5rem;">Visit Website</span>
@@ -241,7 +241,7 @@
                         </span>
                     </a>
                     <a href="https://wif.piu.ac.ug/" target="_blank" 
-                       style="display: inline-flex; align-items: center; padding: 0.625rem 1.25rem; background: rgba(255, 255, 255, 0.9); color: #da3322; border-radius: 0.5rem; text-decoration: none; font-weight: 500; transition: all 0.2s;"
+                       style="display: inline-flex; align-items: center; padding: 0.625rem 1.25rem; background: rgba(255, 255, 255, 0.9); color: #4f1301; border-radius: 0.5rem; text-decoration: none; font-weight: 500; transition: all 0.2s;"
                        onmouseover="this.style.background='white'; this.style.boxShadow='0 10px 15px -3px rgba(0, 0, 0, 0.1)';"
                        onmouseout="this.style.background='rgba(255, 255, 255, 0.9)'; this.style.boxShadow='none';">
                         <span style="margin-right: 0.5rem;">Mentorship Program</span>

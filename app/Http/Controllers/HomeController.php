@@ -37,7 +37,7 @@ class HomeController extends Controller
 
         $latestPosts = BlogPost::where('is_published', true)
             ->orderBy('published_at', 'desc')
-            ->limit(3)
+            ->limit(8)
             ->get();
 
         // Get page sections

@@ -1,6 +1,6 @@
 /* WIF Brand Colors - Override Bootstrap Variables */
 :root {
-    --primary: #da3322 !important;
+    --primary: #4f1301 !important;
     --secondary: #009c84 !important;
     --accent-yellow: #fbd14f !important;
     --accent-orange: #f28615 !important;
@@ -8,9 +8,9 @@
     --text-dark-alt: #4f1301 !important;
 
     /* Bootstrap Variable Overrides */
-    --bs-primary: #da3322 !important;
+    --bs-primary: #4f1301 !important;
     --bs-secondary: #009c84 !important;
-    --bs-primary-rgb: 218, 51, 34 !important;
+    --bs-primary-rgb: 79, 19, 1 !important;
     --bs-secondary-rgb: 0, 156, 132 !important;
 }
 
@@ -41,6 +41,21 @@ p {
     line-height: 1.7;
     color: var(--text-dark);
 }
+
+/* Force white text inside dark primary (brown) backgrounds,
+   overriding both the global p color and any inline styles
+   injected by rich-text editors. */
+.bg-primary,
+.bg-primary p,
+.bg-primary h1, .bg-primary h2, .bg-primary h3,
+.bg-primary h4, .bg-primary h5, .bg-primary h6,
+.bg-primary li, .bg-primary small, .bg-primary label,
+.bg-primary span:not(.badge) {
+    color: white !important;
+}
+.bg-primary a:not(.btn):not(.nav-link) {
+    color: rgba(255, 255, 255, 0.9) !important;
+}
 .content p,
 .footer p {
     font-weight: 300;
@@ -56,8 +71,8 @@ p {
 
 .btn-primary:hover,
 .btn-primary:active:hover {
-    background-color: #c02a1a !important;
-    border-color: #c02a1a !important;
+    background-color: #390e01 !important;
+    border-color: #390e01 !important;
     color: white !important;
 }
 
@@ -516,7 +531,19 @@ p {
 }
 
 .section-padding {
-    padding: 80px 0;
+    padding: 50px 0;
+}
+
+/* Brown brand accent — section heading underline */
+.section-padding h2::after,
+.section-heading-underline::after {
+    content: '';
+    display: block;
+    width: 48px;
+    height: 3px;
+    background: var(--text-dark);
+    margin: 0.5rem auto 0;
+    border-radius: 2px;
 }
 
 .card {
@@ -769,8 +796,8 @@ p {
 }
 
 .navbar-nav .nav-link.btn:hover {
-    background-color: #c02a1a !important;
-    border-color: #c02a1a !important;
+    background-color: #390e01 !important;
+    border-color: #390e01 !important;
     color: white !important;
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(218, 51, 34, 0.3);
@@ -890,7 +917,7 @@ p {
     }
 
     .section-padding {
-        padding: 40px 0;
+        padding: 30px 0;
     }
 
     .team-member-photo,
@@ -901,6 +928,13 @@ p {
     .navbar-brand span {
         font-size: 1.2rem;
     }
+}
+
+/* Project announcement banner */
+.project-announcement {
+    background: #fffbea;
+    border-bottom: 2px solid var(--accent-yellow);
+    padding: 0.75rem 0;
 }
 
 /* Glowing Card Hover Effect */

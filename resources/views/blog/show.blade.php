@@ -14,18 +14,6 @@
 <!-- Blog Post Detail -->
 <section class="section-padding">
     <div class="container">
-        <div class="row mb-4">
-            <div class="col-12">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('blog.index') }}">Blog</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">{{ Str::limit(strip_tags($post->title), 30) }}</li>
-                    </ol>
-                </nav>
-            </div>
-        </div>
-        
         <div class="row">
             <div class="col-lg-8">
                 <article>

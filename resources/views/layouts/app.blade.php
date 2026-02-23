@@ -46,8 +46,8 @@
     <link rel="canonical" href="{{ url()->current() }}">
     
     <!-- Additional SEO -->
-    <meta name="theme-color" content="#da3322">
-    <meta name="msapplication-TileColor" content="#da3322">
+    <meta name="theme-color" content="#4f1301">
+    <meta name="msapplication-TileColor" content="#4f1301">
     
     <!-- Bootstrap CSS - Load first -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -145,38 +145,51 @@
                 </div>
                 <div class="col-lg-3 col-md-6 mb-4">
                     <h5>Get In Touch</h5>
+                    @if(!empty($siteSettings->address))
                     <div class="mb-3">
                         <strong>Address:</strong><br>
-                        <span class="footer-text">Arriva building, Bombo Road, Kampala - Uganda</span>
+                        <span class="footer-text">{{ $siteSettings->address }}</span>
                     </div>
+                    @endif
+                    @if(!empty($siteSettings->email))
                     <div class="mb-3">
                         <strong>Email:</strong><br>
-                        <a href="mailto:hello@joinwomeninfilm.org" class="footer-email">hello@joinwomeninfilm.org</a><br>
-                        <a href="mailto:womeninfilmcug@gmail.com" class="footer-email">womeninfilmcug@gmail.com</a>
+                        <a href="mailto:{{ $siteSettings->email }}" class="footer-email">{{ $siteSettings->email }}</a>
                     </div>
+                    @endif
+                    @if(!empty($siteSettings->business_hours))
                     <div class="mb-3">
                         <strong>Hours:</strong><br>
-                        <span class="footer-text">Monday - Friday, 08am - 05pm</span>
+                        <span class="footer-text">{{ $siteSettings->business_hours }}</span>
                     </div>
+                    @endif
                 </div>
                 <div class="col-lg-3 col-md-6 mb-4">
                     <h5>Contact Info</h5>
+                    @forelse($footerContacts as $contact)
                     <div class="mb-3">
-                        <a href="tel:+256784084218" class="footer-phone">+256 784 084218</a><br>
-                        <small>Rujema Mutesi (Project Lead)</small>
+                        <a href="tel:{{ preg_replace('/\s+/', '', $contact->phone) }}" class="footer-phone">{{ $contact->phone }}</a><br>
+                        <small>{{ $contact->name }}@if($contact->role) ({{ $contact->role }})@endif</small>
                     </div>
-                    <div class="mb-3">
-                        <a href="tel:+256705098317" class="footer-phone">+256 705 098317</a><br>
-                        <small>Jesca Ahimbisibwe (Director)</small>
-                    </div>
-                    <div class="mb-3">
-                        <a href="tel:+256776761554" class="footer-phone">+256 776 761554</a><br>
-                        <small>Theos Barham (Ass Project Lead)</small>
-                    </div>
+                    @empty
+                    <p class="footer-text">Contact us via email or phone.</p>
+                    @endforelse
                     <div class="social-links mt-3">
-                        <a href="https://www.instagram.com/womeninfilmug/" target="_blank" rel="noopener noreferrer" title="Instagram"><i class="fab fa-instagram"></i></a>
-                        <a href="https://x.com/WomenInFilmUg" target="_blank" rel="noopener noreferrer" title="X (Twitter)"><i class="fab fa-twitter"></i></a>
-                        <a href="https://www.linkedin.com/showcase/women-in-film-organisation/posts/?feedView=all" target="_blank" rel="noopener noreferrer" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        @if(!empty($siteSettings->instagram_url))
+                        <a href="{{ $siteSettings->instagram_url }}" target="_blank" rel="noopener noreferrer" title="Instagram"><i class="fab fa-instagram"></i></a>
+                        @endif
+                        @if(!empty($siteSettings->twitter_url))
+                        <a href="{{ $siteSettings->twitter_url }}" target="_blank" rel="noopener noreferrer" title="X (Twitter)"><i class="fab fa-twitter"></i></a>
+                        @endif
+                        @if(!empty($siteSettings->linkedin_url))
+                        <a href="{{ $siteSettings->linkedin_url }}" target="_blank" rel="noopener noreferrer" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        @endif
+                        @if(!empty($siteSettings->tiktok_url))
+                        <a href="{{ $siteSettings->tiktok_url }}" target="_blank" rel="noopener noreferrer" title="TikTok"><i class="fab fa-tiktok"></i></a>
+                        @endif
+                        @if(!empty($siteSettings->facebook_url))
+                        <a href="{{ $siteSettings->facebook_url }}" target="_blank" rel="noopener noreferrer" title="Facebook"><i class="fab fa-facebook"></i></a>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -236,7 +249,7 @@
                         icon: 'success',
                         title: options.successTitle || 'Success!',
                         text: options.successText || 'Your submission was received.',
-                        confirmButtonColor: '#da3322',
+                        confirmButtonColor: '#4f1301',
                     }).then(() => {
                         if (options.redirect) {
                             window.location.href = options.redirect;
@@ -268,7 +281,7 @@
                             icon: 'warning',
                             title: 'Please check your input',
                             html: errorLines.map(m => '<p class="mb-1">' + m + '</p>').join(''),
-                            confirmButtonColor: '#da3322',
+                            confirmButtonColor: '#4f1301',
                         }).then(() => {
                             if (firstInvalid) firstInvalid.focus();
                         });
@@ -277,7 +290,7 @@
                             icon: 'error',
                             title: options.errorTitle || 'Something went wrong',
                             text: err.response?.data?.message || 'Please try again later.',
-                            confirmButtonColor: '#da3322',
+                            confirmButtonColor: '#4f1301',
                         });
                     }
                 } finally {

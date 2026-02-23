@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\CarouselItem;
+
 use App\Models\PageHero;
 use App\Models\AdvisoryBoardMember;
 use App\Models\BoardOfDirector;
@@ -51,6 +52,9 @@ class DatabaseSeeder extends Seeder
         
         // Page Sections
         $this->seedPageSections();
+
+        // Site Settings & Contact Persons
+        $this->call(SiteSettingsSeeder::class);
     }
     
     private function seedCarouselItems()

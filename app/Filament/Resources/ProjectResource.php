@@ -63,6 +63,25 @@ class ProjectResource extends Resource
                     ->columns(2)
                     ->columnSpanFull(),
 
+                Schemas\Components\Section::make('Announcement / What\'s Happening')
+                    ->description('Show a brief notice below the hero on the project page. Leave blank to hide.')
+                    ->schema([
+                        Forms\Components\Textarea::make('announcement_text')
+                            ->label('Announcement Text')
+                            ->rows(2)
+                            ->placeholder('e.g. Film Symposium 24th October 2026 - Skyz Hotel')
+                            ->columnSpanFull(),
+                        Forms\Components\TextInput::make('announcement_link')
+                            ->label('Link URL (optional)')
+                            ->url()
+                            ->placeholder('https://linkedin.com/...'),
+                        Forms\Components\TextInput::make('announcement_link_label')
+                            ->label('Link Button Label')
+                            ->placeholder('Latest Updates'),
+                    ])
+                    ->columns(2)
+                    ->columnSpanFull(),
+
                 Schemas\Components\Section::make('Details')
                     ->schema([
                         Forms\Components\RichEditor::make('objectives')
