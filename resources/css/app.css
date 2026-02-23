@@ -180,29 +180,191 @@ p {
     left: 0;
     right: 0;
     bottom: 0;
-    background: transparent;
+    background: linear-gradient(to bottom, transparent 30%, rgba(0,0,0,0.55) 100%);
     display: flex;
-    align-items: center;
+    align-items: flex-end;
+    padding-bottom: 60px;
     z-index: 1;
 }
 
 .carousel-content {
     color: white;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9), 0 0 8px rgba(0, 0, 0, 0.8),
-        0 0 16px rgba(0, 0, 0, 0.6), -1px -1px 2px rgba(0, 0, 0, 0.9);
-    background: rgba(0, 0, 0, 0.3);
-    padding: 2rem;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+    padding: 1.5rem 2rem;
     border-radius: 10px;
-    backdrop-filter: blur(2px);
 }
 
 .carousel-title {
-    font-size: 3.5rem;
+    font-size: 3rem;
     font-weight: 700;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
     line-height: 1.2;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9), 0 0 8px rgba(0, 0, 0, 0.8),
-        0 0 16px rgba(0, 0, 0, 0.6), -1px -1px 2px rgba(0, 0, 0, 0.9);
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.9);
+}
+
+/* Partners Slider */
+.partners-slider-section {
+    overflow: hidden;
+}
+
+.partners-track-wrapper {
+    overflow: hidden;
+    position: relative;
+}
+
+.partners-track {
+    display: flex;
+    width: max-content;
+    animation: scrollLogos 30s linear infinite;
+}
+
+.partners-track:hover {
+    animation-play-state: paused;
+}
+
+.partners-track-item {
+    flex-shrink: 0;
+    padding: 0.75rem 1.5rem;
+}
+
+@keyframes scrollLogos {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+/* Testimonial card color variants */
+.testimonial-card-1 {
+    background-color: var(--primary) !important;
+    color: white !important;
+}
+
+.testimonial-card-1 h5,
+.testimonial-card-1 p,
+.testimonial-card-1 small,
+.testimonial-card-1 .text-muted {
+    color: rgba(255,255,255,0.9) !important;
+}
+
+.testimonial-card-2 {
+    background-color: var(--secondary) !important;
+    color: white !important;
+}
+
+.testimonial-card-2 h5,
+.testimonial-card-2 p,
+.testimonial-card-2 small,
+.testimonial-card-2 .text-muted {
+    color: rgba(255,255,255,0.9) !important;
+}
+
+.testimonial-card-3 {
+    background-color: var(--accent-yellow) !important;
+    color: var(--text-dark) !important;
+}
+
+.testimonial-card-3 h5,
+.testimonial-card-3 p,
+.testimonial-card-3 small,
+.testimonial-card-3 .text-muted {
+    color: var(--text-dark) !important;
+}
+
+/* Projects index slider */
+.projects-slider {
+    position: relative;
+}
+
+.projects-slider .carousel-item {
+    height: auto;
+}
+
+.project-slide-card {
+    position: relative;
+    min-height: 480px;
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+    border-radius: 16px;
+}
+
+.project-slide-bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+}
+
+.project-slide-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent 30%, rgba(30,5,0,0.88) 100%);
+}
+
+.project-slide-content {
+    position: relative;
+    z-index: 2;
+    padding: 2.5rem;
+    color: white;
+    width: 100%;
+}
+
+.project-slide-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 0.75rem;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+}
+
+.project-slide-excerpt {
+    font-size: 1rem;
+    color: rgba(255,255,255,0.88);
+    margin-bottom: 1.25rem;
+    max-width: 600px;
+}
+
+/* Testimonials featured video */
+.testimonials-video-section {
+    background: var(--text-dark);
+    padding: 3rem 0;
+}
+
+.testimonials-video-section h2,
+.testimonials-video-section p {
+    color: white !important;
+}
+
+/* Work Plan section */
+.workplan-card {
+    background-color: var(--text-dark) !important;
+    border-radius: 12px;
+    padding: 2.5rem 3rem;
+}
+
+.workplan-card .workplan-title {
+    color: var(--accent-yellow);
+    font-size: 1.75rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.workplan-card .workplan-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 0.85rem;
+    color: white;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.workplan-card .workplan-item i {
+    color: var(--primary);
+    margin-right: 0.75rem;
+    margin-top: 0.2rem;
+    flex-shrink: 0;
+    font-size: 1.1rem;
 }
 
 .carousel-control-prev,

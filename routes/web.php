@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\ProjectApplicationController;
 use App\Http\Controllers\TestimonialController;
 use App\Http\Controllers\PartnershipController;
 use App\Http\Controllers\GalleryController;
@@ -16,10 +17,12 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // About
 Route::get('/about', [AboutController::class, 'index'])->name('about');
+Route::get('/work-plan', [AboutController::class, 'workPlan'])->name('work-plan');
 
 // Projects
 Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');
 Route::get('/projects/{slug}', [ProjectController::class, 'show'])->name('projects.show');
+Route::post('/projects/{slug}/apply', [ProjectApplicationController::class, 'store'])->name('projects.apply');
 
 // Testimonials
 Route::get('/testimonials', [TestimonialController::class, 'index'])->name('testimonials.index');

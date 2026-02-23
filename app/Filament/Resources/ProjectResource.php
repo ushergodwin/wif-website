@@ -50,7 +50,19 @@ class ProjectResource extends Resource
                     ])
                     ->columns(2)
                     ->columnSpanFull(),
-                    
+
+                Schemas\Components\Section::make('Event Details')
+                    ->description('Fill in if this project is an event or has a specific date.')
+                    ->schema([
+                        Forms\Components\DatePicker::make('event_date')
+                            ->label('Event Date'),
+                        Forms\Components\TextInput::make('event_location')
+                            ->label('Event Location / Venue')
+                            ->maxLength(255),
+                    ])
+                    ->columns(2)
+                    ->columnSpanFull(),
+
                 Schemas\Components\Section::make('Details')
                     ->schema([
                         Forms\Components\RichEditor::make('objectives')
@@ -63,7 +75,7 @@ class ProjectResource extends Resource
                             ->columnSpanFull(),
                     ])
                     ->columnSpanFull(),
-                    
+
                 Schemas\Components\Section::make('Media')
                     ->schema([
                         Forms\Components\FileUpload::make('featured_image')
@@ -78,11 +90,33 @@ class ProjectResource extends Resource
                             ->directory('projects/gallery')
                             ->columnSpanFull(),
                         Forms\Components\TextInput::make('video_url')
+                            ->label('Video URL')
                             ->url()
+                            ->helperText('YouTube or Vimeo URL (e.g. https://www.youtube.com/watch?v=...)')
                             ->columnSpanFull(),
                     ])
                     ->columnSpanFull(),
-                    
+
+                Schemas\Components\Section::make('Applications / Sign-up')
+                    ->description('Enable this to allow people to apply or sign up for this project/event.')
+                    ->schema([
+                        Forms\Components\Toggle::make('allow_applications')
+                            ->label('Allow Applications / Sign-ups')
+                            ->default(false)
+                            ->live(),
+                        Forms\Components\DatePicker::make('application_deadline')
+                            ->label('Application Deadline')
+                            ->visible(fn ($get) => $get('allow_applications')),
+                        Forms\Components\TextInput::make('application_form_url')
+                            ->label('External Application Form URL (optional)')
+                            ->url()
+                            ->helperText('If set, the Apply Now button will link here instead of showing the inline form.')
+                            ->visible(fn ($get) => $get('allow_applications'))
+                            ->columnSpanFull(),
+                    ])
+                    ->columns(2)
+                    ->columnSpanFull(),
+
                 Schemas\Components\Section::make('Settings')
                     ->schema([
                         Forms\Components\Toggle::make('is_featured')
@@ -107,6 +141,12 @@ class ProjectResource extends Resource
                 Tables\Columns\TextColumn::make('title')
                     ->searchable()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('event_date')
+                    ->date()
+                    ->sortable(),
+                Tables\Columns\IconColumn::make('allow_applications')
+                    ->boolean()
+                    ->label('Applications'),
                 Tables\Columns\IconColumn::make('is_featured')
                     ->boolean(),
                 Tables\Columns\IconColumn::make('is_active')
@@ -121,6 +161,7 @@ class ProjectResource extends Resource
             ->filters([
                 Tables\Filters\TernaryFilter::make('is_featured'),
                 Tables\Filters\TernaryFilter::make('is_active'),
+                Tables\Filters\TernaryFilter::make('allow_applications'),
             ])
             ->actions([
                 Actions\EditAction::make(),
@@ -150,4 +191,3 @@ class ProjectResource extends Resource
         ];
     }
 }
-

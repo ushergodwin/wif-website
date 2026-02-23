@@ -28,21 +28,17 @@
                 <img src="{{ $item->image_url }}" class="d-block w-100" alt="Carousel Image {{ $index + 1 }}">
                 <div class="carousel-overlay">
                     <div class="container">
-                        <div class="row align-items-center min-vh-50">
-                            <div class="col-lg-8 mx-auto text-center">
-                                <div class="carousel-content">
-                                    @if($item->overlay_text)
-                                        <h1 class="carousel-title animate__animated animate__slideInUp">{{ strip_tags($item->overlay_text) }}</h1>
-                                    @endif
-                                    @if($item->button_text && $item->button_url)
-                                    <a href="{{ $item->button_url }}" 
-                                       class="btn btn-accent-yellow btn-lg mt-4 animate__animated animate__fadeInUp"
-                                       @if(filter_var($item->button_url, FILTER_VALIDATE_URL)) target="_blank" rel="noopener noreferrer" @endif>
-                                        {{ $item->button_text }}
-                                    </a>
-                                    @endif
-                                </div>
-                            </div>
+                        <div class="carousel-content">
+                            @if($item->overlay_text)
+                                <h1 class="carousel-title animate__animated animate__slideInUp">{{ strip_tags($item->overlay_text) }}</h1>
+                            @endif
+                            @if($item->button_text && $item->button_url)
+                            <a href="{{ $item->button_url }}"
+                               class="btn btn-accent-yellow btn-lg animate__animated animate__fadeInUp"
+                               @if(filter_var($item->button_url, FILTER_VALIDATE_URL)) target="_blank" rel="noopener noreferrer" @endif>
+                                {{ $item->button_text }}
+                            </a>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -74,9 +70,6 @@
                     <a href="{{ route('partnerships.index') }}" class="btn btn-outline-light btn-lg">Partner With Us</a>
                     <a href="{{ route('projects.index') }}" class="btn btn-outline-light btn-lg">Explore Our Projects</a>
                 </div>
-            </div>
-            <div class="col-lg-6 text-center">
-                <img src="https://via.placeholder.com/600x400/da3322/ffffff?text=WIF+Hero" alt="Women in Film" class="img-fluid rounded">
             </div>
         </div>
     </div>
@@ -180,31 +173,32 @@
             </div>
         </div>
         <div class="row">
-            @forelse($testimonials as $testimonial)
+            @forelse($testimonials as $index => $testimonial)
+            @php
+                $colorClass = ['testimonial-card-1', 'testimonial-card-2', 'testimonial-card-3'][$index % 3];
+            @endphp
             <div class="col-md-4 mb-4">
-                <div class="card shadow h-100 animate__animated animate__slideInUp">
+                <div class="card shadow h-100 animate__animated animate__slideInUp {{ $colorClass }}">
                     <div class="card-header bg-transparent border-0 pb-0">
                         <div class="d-flex">
                             <div class="flex-shrink-0">
                                 @if($testimonial->photo_url)
-                                    <img src="{{ $testimonial->photo_url }}" alt="{{ $testimonial->participant_name }}" class="rounded me-3" width="80" height="80">
-                                    @else
-                                    <div class="rounded-circle me-3 bg-secondary text-white d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
-                                        {{ substr($testimonial->participant_name, 0, 1) }}
+                                    <img src="{{ $testimonial->photo_url }}" alt="{{ $testimonial->participant_name }}" class="rounded me-3" width="80" height="80" style="object-fit:cover;">
+                                @else
+                                    <div class="rounded-circle me-3 d-flex align-items-center justify-content-center" style="width: 80px; height: 80px; background: rgba(255,255,255,0.25);">
+                                        <span style="font-size:1.5rem;font-weight:700;">{{ substr($testimonial->participant_name, 0, 1) }}</span>
                                     </div>
                                 @endif
                             </div>
                             <div class="flex-grow-1 ms-3">
-                                <h5>{{ $testimonial->participant_name}}</h5>
-                                <p>
-                                    @if($testimonial->role)
-                                    <small class="text-muted">{{ $testimonial->role }}</small>
-                                    @endif
-                                </p>
+                                <h5>{{ $testimonial->participant_name }}</h5>
+                                @if($testimonial->role)
+                                <p class="mb-0"><small>{{ $testimonial->role }}</small></p>
+                                @endif
                             </div>
                         </div>
                     </div>
-                    <hr class="text-muted"/>
+                    <hr class="opacity-25"/>
                     <div class="card-body">
                         {{ Str::limit(strip_tags($testimonial->testimonial_text), 150) }}
                     </div>
@@ -224,10 +218,10 @@
     </div>
 </section>
 
-<!-- Partners -->
-<section class="section-padding">
+<!-- Partners Slider -->
+<section class="section-padding partners-slider-section">
     <div class="container">
-        <div class="row mb-5 animate__animated animate__fadeIn">
+        <div class="row mb-4 animate__animated animate__fadeIn">
             <div class="col-12 text-center">
                 @if(isset($pageSections['partners']))
                 <h2 class="mb-3">{{ $pageSections['partners']->title ?? 'Our Partners' }}</h2>
@@ -242,12 +236,17 @@
                 @endif
             </div>
         </div>
-        <div class="row align-items-center justify-content-center g-4">
-            @forelse($partners as $partner)
-            <div class="col-lg-2 col-md-3 col-sm-4 col-6">
-                <div class="partner-logo-wrapper animate__animated animate__slideInUp">
+    </div>
+
+    @if($partners->count() > 0)
+    <div class="partners-track-wrapper">
+        <div class="partners-track">
+            {{-- First pass --}}
+            @foreach($partners as $partner)
+            <div class="partners-track-item">
+                <div class="partner-logo-wrapper" style="width:160px;">
                     @if($partner->logo_url)
-                    <a href="{{ $partner->website_url ?? '#' }}" 
+                    <a href="{{ $partner->website_url ?? '#' }}"
                        target="{{ $partner->website_url ? '_blank' : '_self' }}"
                        rel="noopener noreferrer"
                        class="partner-logo-link">
@@ -260,15 +259,29 @@
                     @endif
                 </div>
             </div>
-            @empty
-            <div class="col-12">
-                <div class="alert alert-info border-start border-4">
-                    <i class="fas fa-info-circle me-2"></i>Partner information coming soon!
+            @endforeach
+            {{-- Duplicate for seamless loop --}}
+            @foreach($partners as $partner)
+            <div class="partners-track-item" aria-hidden="true">
+                <div class="partner-logo-wrapper" style="width:160px;">
+                    @if($partner->logo_url)
+                    <a href="{{ $partner->website_url ?? '#' }}"
+                       target="{{ $partner->website_url ? '_blank' : '_self' }}"
+                       rel="noopener noreferrer"
+                       class="partner-logo-link">
+                        <img src="{{ $partner->logo_url }}" alt="{{ $partner->name ?? 'Partner' }}" class="partner-logo-img">
+                    </a>
+                    @else
+                    <div class="partner-logo-placeholder">
+                        <span>{{ $partner->name ?? 'Partner' }}</span>
+                    </div>
+                    @endif
                 </div>
             </div>
-            @endforelse
+            @endforeach
         </div>
     </div>
+    @endif
 </section>
 
 <!-- Latest Blog Posts -->
@@ -322,6 +335,7 @@
         </div>
     </div>
 </section>
+
 <!-- Join Community Section -->
 <section class="section-padding bg-primary text-white animate__animated animate__slideInDown">
     <div class="container">
@@ -374,3 +388,11 @@
 </section>
 @endsection
 
+@push('scripts')
+<script>
+    handleFormSubmit('join-community-form', {
+        successTitle: 'You\'re In!',
+        successText: 'Welcome to our community! We look forward to keeping you informed.',
+    });
+</script>
+@endpush

@@ -46,7 +46,7 @@
                         </div>
                         @endif
                         
-                        <form action="{{ route('subscribers.store') }}" method="POST">
+                        <form action="{{ route('subscribers.store') }}" method="POST" id="subscriber-form">
                             @csrf
                             <div class="mb-3">
                                 <label for="name" class="form-label">Full Name <span class="text-danger">*</span></label>
@@ -82,4 +82,13 @@
     </div>
 </section>
 @endsection
+
+@push('scripts')
+<script>
+    handleFormSubmit('subscriber-form', {
+        successTitle: 'Welcome!',
+        successText: 'You have successfully joined our community. We look forward to keeping you informed.',
+    });
+</script>
+@endpush
 

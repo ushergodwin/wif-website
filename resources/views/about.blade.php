@@ -25,8 +25,8 @@
 
 <!-- Who We Are -->
 <div class="container">
-    <div class="row my-5">
-        <div class="col-md-4 mt-3">
+    <div class="row my-3">
+        <div class="col-md-12 mt-3">
             @if(isset($pageSections['who-we-are']))
             @php $section = $pageSections['who-we-are']; @endphp
             <section class="card h-100 shadow">
@@ -44,8 +44,8 @@
             </section>
             @endif
         </div>
-        
-        <div class="col-md-4 mt-3">
+
+        <div class="col-md-12 mt-3">
             @if(isset($pageSections['vision']))
                 @php $section = $pageSections['vision']; @endphp
                 <section class="card h-100 shadow">
@@ -64,7 +64,7 @@
             @endif
         </div>
 
-        <div class="col-md-4 mt-3">
+        <div class="col-md-12 mt-3">
             @if(isset($pageSections['mission']))
             @php $section = $pageSections['mission']; @endphp
             <section class="card h-100 shadow">
@@ -88,12 +88,12 @@
 <!-- Core Values -->
 @if(isset($pageSections['core-values']))
 @php $section = $pageSections['core-values']; @endphp
-<section class="section-padding bg-light">
+<section class="py-4 bg-light">
     <div class="container">
-        <div class="row mb-5">
+        <div class="row mb-4">
             <div class="col-12 text-center">
                 @if($section->title)
-                <h2 class="mb-4">{{ $section->title }}</h2>
+                <h2 class="mb-3">{{ $section->title }}</h2>
                 @endif
                 @if($section->subtitle)
                 <p class="text-muted">{{ $section->subtitle }}</p>
@@ -104,7 +104,7 @@
         <div class="row">
             @foreach($section->items as $index => $item)
             <div class="col-md-6 mb-4">
-                <div class="card h-100 text-center shadow bg-secondary text-white">
+                <div class="card h-100 shadow bg-secondary text-white">
                     <div class="card-body">
                         @if($item['title'] ?? null)
                         <h4 class="mb-3">{{ $index + 1 }}. {{ $item['title'] }}</h4>
@@ -125,10 +125,10 @@
 <!-- Objectives -->
 @if(isset($pageSections['objectives']))
 @php $section = $pageSections['objectives']; @endphp
-<section class="section-padding {{ $section->background_color == 'light' ? 'bg-light' : ($section->background_color == 'primary' ? 'bg-primary text-white' : ($section->background_color == 'secondary' ? 'bg-secondary text-white' : '')) }}">
+<section class="py-4 {{ $section->background_color == 'light' ? 'bg-light' : ($section->background_color == 'primary' ? 'bg-primary text-white' : ($section->background_color == 'secondary' ? 'bg-secondary text-white' : '')) }}">
     <div class="container">
         <div class="row">
-            <div class="col-lg-8 mx-auto">
+            <div class="col-lg-12 mx-auto">
                 @if($section->title)
                 <h2 class="mb-4">{{ $section->title }}</h2>
                 @endif
@@ -139,7 +139,7 @@
                 <div class="row">
                     @foreach($section->items as $index => $item)
                     <div class="card card-body shadow mb-3">
-                        <div class="col-md-12 mb-4">
+                        <div class="col-md-12">
                             <div class="d-flex">
                                 <div class="flex-shrink-0">
                                     <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
@@ -167,41 +167,59 @@
 @endif
 
 <!-- Work Plan -->
-@if(isset($pageSections['work-plan']))
-@php $section = $pageSections['work-plan']; @endphp
-<section class="section-padding">
-    <div class="container card card-body bg-dark text-white shadow">
-        <div class="row">
-            <div class="col-lg-8 mx-auto">
-                @if($section->title)
-                <h2 class="mb-4">{{ $section->title }}</h2>
-                @endif
-                @if($section->subtitle)
-                <p class="mb-4">{{ $section->subtitle }}</p>
-                @endif
-                @if($section->items && count($section->items) > 0)
-                <ul class="list-unstyled">
-                    @foreach($section->items as $item)
-                    <li class="mb-3">
-                        <i class="{{ $item['icon'] ?? 'fas fa-check-circle' }} text-primary me-2"></i>
-                        {{ $item['title'] ?? $item['description'] ?? '' }}
-                    </li>
-                    @endforeach
-                </ul>
-                @elseif($section->content)
-                <div>{!! $section->content !!}</div>
-                @endif
-            </div>
+@if($workPlan)
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-4">
+            <h2 class="mb-2">{{ $workPlan->title }}</h2>
+            @if($workPlan->description)
+            <p class="text-muted">{{ $workPlan->description }}</p>
+            @endif
         </div>
+
+        @if($previewEvents->count() > 0)
+        <div class="row">
+            @foreach($previewEvents as $event)
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center gap-2 mb-3">
+                            <div class="text-center px-2 py-1 rounded" style="background: var(--primary); color: white; min-width: 54px;">
+                                <div style="font-size: 1.4rem; font-weight: 700; line-height: 1;">{{ $event->date->format('d') }}</div>
+                                <div style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px;">{{ $event->date->format('M Y') }}</div>
+                            </div>
+                            @if($event->location)
+                            <small class="text-muted"><i class="fas fa-map-marker-alt me-1"></i>{{ $event->location }}</small>
+                            @endif
+                        </div>
+                        <h5 class="card-title mb-2">{{ $event->title }}</h5>
+                        @if($event->theme)
+                        <span class="badge bg-secondary mb-2">{{ $event->theme }}</span>
+                        @endif
+                        @if($event->description)
+                        <p class="card-text text-muted small">{{ \Illuminate\Support\Str::limit($event->description, 100) }}</p>
+                        @endif
+                    </div>
+                </div>
+            </div>
+            @endforeach
+        </div>
+
+        <div class="text-center mt-2">
+            <a href="{{ route('work-plan') }}" class="btn btn-outline-primary">
+                <i class="fas fa-calendar-alt me-2"></i>View All Work Plan Events
+            </a>
+        </div>
+        @endif
     </div>
 </section>
 @endif
 
 <!-- Board of Directors -->
 @if($boardOfDirectors->count() > 0)
-<section class="section-padding bg-light">
+<section class="py-4 bg-light">
     <div class="container">
-        <div class="row mb-5">
+        <div class="row mb-4">
             <div class="col-12 text-center">
                 <h2 class="mb-3">Board of Directors</h2>
                 <p class="text-muted">Our leadership team guiding the organization</p>
@@ -232,9 +250,9 @@
 
 <!-- Advisory Board -->
 @if($advisoryBoard->count() > 0)
-<section class="section-padding">
+<section class="py-4">
     <div class="container">
-        <div class="row mb-5">
+        <div class="row mb-4">
             <div class="col-12 text-center">
                 <h2 class="mb-3">Advisory Board</h2>
                 <p class="text-muted">Industry experts and advisors supporting our mission</p>
@@ -266,7 +284,7 @@
 <!-- CTA Section -->
 @if(isset($pageSections['cta']))
 @php $section = $pageSections['cta']; @endphp
-<section class="section-padding {{ $section->background_color == 'primary' ? 'bg-primary text-white' : ($section->background_color == 'secondary' ? 'bg-secondary text-white' : ($section->background_color == 'light' ? 'bg-light' : '')) }}">
+<section class="py-5 {{ $section->background_color == 'primary' ? 'bg-primary text-white' : ($section->background_color == 'secondary' ? 'bg-secondary text-white' : ($section->background_color == 'light' ? 'bg-light' : '')) }}">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 mx-auto text-center">
@@ -281,7 +299,7 @@
                 @if($section->items && count($section->items) > 0)
                 <div class="d-flex flex-wrap gap-3 justify-content-center">
                     @foreach($section->items as $item)
-                    <a href="{{ $item['url'] ?? '#' }}" 
+                    <a href="{{ $item['url'] ?? '#' }}"
                        class="btn {{ $loop->first ? 'btn-accent-yellow' : 'btn-outline-light' }} btn-lg"
                        @if(isset($item['url']) && filter_var($item['url'], FILTER_VALIDATE_URL)) target="_blank" rel="noopener noreferrer" @endif>
                         {{ $item['title'] ?? $item['description'] ?? 'Button' }}
@@ -301,6 +319,3 @@
 </section>
 @endif
 @endsection
-
-
-

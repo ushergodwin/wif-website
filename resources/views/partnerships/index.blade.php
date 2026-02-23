@@ -154,3 +154,12 @@
 </section>
 @endsection
 
+@push('scripts')
+<script>
+    handleFormSubmit('partnership-inquiry-form', {
+        successTitle: 'Inquiry Received!',
+        successText: 'Thank you for your interest in partnering with us. We will get back to you shortly.',
+    });
+</script>
+@endpush
+

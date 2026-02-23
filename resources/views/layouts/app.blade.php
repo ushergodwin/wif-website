@@ -51,6 +51,8 @@
     
     <!-- Bootstrap CSS - Load first -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- SweetAlert2 Bootstrap theme -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bootstrap-4/bootstrap-4.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&display=swap" rel="stylesheet">
@@ -172,10 +174,9 @@
                         <small>Theos Barham (Ass Project Lead)</small>
                     </div>
                     <div class="social-links mt-3">
-                        <a href="#" target="_blank"><i class="fab fa-facebook"></i></a>
-                        <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
-                        <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
-                        <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://www.instagram.com/womeninfilmug/" target="_blank" rel="noopener noreferrer" title="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://x.com/WomenInFilmUg" target="_blank" rel="noopener noreferrer" title="X (Twitter)"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.linkedin.com/showcase/women-in-film-organisation/posts/?feedView=all" target="_blank" rel="noopener noreferrer" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
                     </div>
                 </div>
             </div>
@@ -192,7 +193,103 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Font Awesome 5 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    
+    <!-- Axios -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        // Global Axios config
+        axios.defaults.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+        axios.defaults.headers.common['Accept'] = 'application/json';
+
+        /**
+         * Handle form submission via Axios with SweetAlert2 feedback.
+         *
+         * @param {string} formId  - The id attribute of the <form> element
+         * @param {object} options - { successTitle, successText, errorTitle }
+         */
+        function handleFormSubmit(formId, options = {}) {
+            const form = document.getElementById(formId);
+            if (!form) return;
+
+            form.addEventListener('submit', async function (e) {
+                e.preventDefault();
+
+                const submitBtn = form.querySelector('[type="submit"]');
+                const originalText = submitBtn ? submitBtn.innerHTML : null;
+                if (submitBtn) {
+                    submitBtn.disabled = true;
+                    submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-1" role="status"></span> Sending...';
+                }
+
+                // Clear previous field errors
+                form.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
+                form.querySelectorAll('.invalid-feedback').forEach(el => el.remove());
+
+                try {
+                    const data = new FormData(form);
+                    await axios.post(form.action, data);
+
+                    Swal.fire({
+                        icon: 'success',
+                        title: options.successTitle || 'Success!',
+                        text: options.successText || 'Your submission was received.',
+                        confirmButtonColor: '#da3322',
+                    }).then(() => {
+                        if (options.redirect) {
+                            window.location.href = options.redirect;
+                        } else {
+                            form.reset();
+                        }
+                    });
+                } catch (err) {
+                    if (err.response && err.response.status === 422) {
+                        // Validation errors — highlight each field and list messages in alert
+                        const errors = err.response.data.errors || {};
+                        let firstInvalid = null;
+                        const errorLines = [];
+
+                        Object.entries(errors).forEach(([field, messages]) => {
+                            errorLines.push(messages[0]);
+                            const input = form.querySelector('[name="' + field + '"]');
+                            if (input) {
+                                input.classList.add('is-invalid');
+                                const feedback = document.createElement('div');
+                                feedback.className = 'invalid-feedback';
+                                feedback.textContent = messages[0];
+                                input.parentNode.appendChild(feedback);
+                                if (!firstInvalid) firstInvalid = input;
+                            }
+                        });
+
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Please check your input',
+                            html: errorLines.map(m => '<p class="mb-1">' + m + '</p>').join(''),
+                            confirmButtonColor: '#da3322',
+                        }).then(() => {
+                            if (firstInvalid) firstInvalid.focus();
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: options.errorTitle || 'Something went wrong',
+                            text: err.response?.data?.message || 'Please try again later.',
+                            confirmButtonColor: '#da3322',
+                        });
+                    }
+                } finally {
+                    if (submitBtn) {
+                        submitBtn.disabled = false;
+                        submitBtn.innerHTML = originalText;
+                    }
+                }
+            });
+        }
+    </script>
+
     @stack('scripts')
 </body>
 </html>

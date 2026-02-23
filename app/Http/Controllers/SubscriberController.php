@@ -15,22 +15,27 @@ class SubscriberController extends Controller
 
     public function store(Request $request)
     {
-        try {
-            $validated = $request->validate([
-                'name' => 'required|string|max:255',
-                'email' => 'required|email|unique:subscribers,email',
-                'area_of_interest' => 'nullable|string|max:255',
+        $validated = $request->validate([
+            'name'             => 'required|string|max:255',
+            'email'            => 'required|email|max:255',
+            'area_of_interest' => 'nullable|string|max:255',
+        ]);
+
+        // Already subscribed — treat as success so the user isn't confused
+        if (Subscriber::where('email', $validated['email'])->exists()) {
+            return response()->json([
+                'message' => 'You are already subscribed to our newsletter. Thank you!'
             ]);
+        }
 
+        try {
             $validated['subscribed_at'] = now();
-
             Subscriber::create($validated);
 
             return response()->json([
                 'message' => 'Thank you for joining our community! You have been successfully subscribed to our newsletter.'
             ]);
         } catch (\Throwable $th) {
-            //throw $th;
             Log::error('Error subscribing user: ' . $th->getMessage());
             return response()->json([
                 'message' => 'An error occurred while processing your subscription. Please try again later.'

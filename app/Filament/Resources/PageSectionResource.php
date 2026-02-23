@@ -35,25 +35,28 @@ class PageSectionResource extends Resource
                         Forms\Components\Select::make('page')
                             ->required()
                             ->options([
-                                'home' => 'Homepage',
-                                'about' => 'About Page',
+                                'home'         => 'Homepage',
+                                'about'        => 'About Page',
+                                'testimonials' => 'Testimonials Page',
+                                'projects'     => 'Projects Page',
                             ])
                             ->searchable(),
                         Forms\Components\TextInput::make('section_key')
                             ->required()
                             ->maxLength(255)
-                            ->helperText('Unique identifier (e.g., about-snapshot, vision, mission, core-values)'),
+                            ->helperText('Unique identifier (e.g., about-snapshot, vision, work-plan)'),
                         Forms\Components\Select::make('section_type')
                             ->required()
                             ->options([
-                                'text' => 'Text Content',
-                                'image_text' => 'Image + Text',
-                                'list' => 'List Items',
-                                'values' => 'Core Values',
-                                'objectives' => 'Objectives',
-                                'cta' => 'Call to Action',
+                                'text'      => 'Text Content',
+                                'image_text'=> 'Image + Text',
+                                'list'      => 'List Items',
+                                'values'    => 'Core Values',
+                                'objectives'=> 'Objectives',
+                                'cta'       => 'Call to Action',
                             ])
-                            ->default('text'),
+                            ->default('text')
+                            ->live(),
                         Forms\Components\TextInput::make('title')
                             ->maxLength(255),
                         Forms\Components\Textarea::make('subtitle')
@@ -65,7 +68,10 @@ class PageSectionResource extends Resource
                             ->disk('public')
                             ->directory('page-sections')
                             ->columnSpanFull(),
+
+                        // Generic list repeater (list / values / objectives)
                         Forms\Components\Repeater::make('items')
+                            ->label('Items')
                             ->schema([
                                 Forms\Components\TextInput::make('title')
                                     ->required(),
@@ -76,18 +82,19 @@ class PageSectionResource extends Resource
                             ])
                             ->columnSpanFull()
                             ->visible(fn ($get) => in_array($get('section_type'), ['list', 'values', 'objectives'])),
+
                         Forms\Components\Select::make('background_color')
                             ->options([
-                                'light' => 'Light',
-                                'white' => 'White',
-                                'primary' => 'Primary (Red)',
-                                'secondary' => 'Secondary (Green)',
+                                'light'    => 'Light',
+                                'white'    => 'White',
+                                'primary'  => 'Primary (Red)',
+                                'secondary'=> 'Secondary (Green)',
                             ])
                             ->default('white'),
                     ])
                     ->columns(2)
                     ->columnSpanFull(),
-                    
+
                 Schemas\Components\Section::make('Settings')
                     ->schema([
                         Forms\Components\Toggle::make('is_active')
@@ -131,8 +138,10 @@ class PageSectionResource extends Resource
             ->filters([
                 Tables\Filters\SelectFilter::make('page')
                     ->options([
-                        'home' => 'Homepage',
-                        'about' => 'About Page',
+                        'home'         => 'Homepage',
+                        'about'        => 'About Page',
+                        'testimonials' => 'Testimonials Page',
+                        'projects'     => 'Projects Page',
                     ]),
                 Tables\Filters\TernaryFilter::make('is_active'),
             ])
@@ -150,18 +159,15 @@ class PageSectionResource extends Resource
 
     public static function getRelations(): array
     {
-        return [
-            //
-        ];
+        return [];
     }
 
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListPageSections::route('/'),
+            'index'  => Pages\ListPageSections::route('/'),
             'create' => Pages\CreatePageSection::route('/create'),
-            'edit' => Pages\EditPageSection::route('/{record}/edit'),
+            'edit'   => Pages\EditPageSection::route('/{record}/edit'),
         ];
     }
 }
-

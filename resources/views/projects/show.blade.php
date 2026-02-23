@@ -24,10 +24,7 @@
 
     .project-hero-bg {
         position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
+        top: 0; left: 0; right: 0; bottom: 0;
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
@@ -36,16 +33,8 @@
     .project-hero-bg::after {
         content: '';
         position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: linear-gradient(
-            to bottom,
-            rgba(57, 14, 1, 0.1) 0%,
-            rgba(57, 14, 1, 0.4) 50%,
-            rgba(57, 14, 1, 0.85) 100%
-        );
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: linear-gradient(to bottom, rgba(57,14,1,0.1) 0%, rgba(57,14,1,0.45) 50%, rgba(57,14,1,0.88) 100%);
     }
 
     .project-hero-content {
@@ -59,28 +48,42 @@
         color: white;
         font-size: 2.75rem;
         font-weight: 700;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        margin-bottom: 0;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        margin-bottom: 0.5rem;
     }
 
     .project-hero-fallback {
         background: linear-gradient(135deg, var(--primary) 0%, var(--accent-orange) 100%);
     }
 
-    /* Project Content Cards */
+    .project-event-info {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: rgba(251,209,79,0.2);
+        border: 1px solid var(--accent-yellow);
+        color: var(--accent-yellow);
+        border-radius: 20px;
+        padding: 0.3rem 1rem;
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin-bottom: 0.75rem;
+    }
+
+    /* Content Cards */
     .project-section-card {
         background: white;
         border-radius: 16px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
         padding: 2rem;
         margin-bottom: 1.5rem;
-        border: 1px solid rgba(0, 0, 0, 0.05);
+        border: 1px solid rgba(0,0,0,0.05);
         transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
     .project-section-card:hover {
         transform: translateY(-4px);
-        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+        box-shadow: 0 8px 30px rgba(0,0,0,0.12);
     }
 
     .project-section-header {
@@ -89,7 +92,7 @@
         gap: 0.75rem;
         margin-bottom: 1.25rem;
         padding-bottom: 1rem;
-        border-bottom: 2px solid rgba(218, 51, 34, 0.1);
+        border-bottom: 2px solid rgba(218,51,34,0.1);
     }
 
     .project-section-icon {
@@ -117,13 +120,27 @@
         line-height: 1.8;
     }
 
-    .project-section-content p:last-child {
-        margin-bottom: 0;
+    .project-section-content p:last-child { margin-bottom: 0; }
+
+    /* Video embed */
+    .project-video-wrapper {
+        position: relative;
+        padding-bottom: 56.25%;
+        height: 0;
+        overflow: hidden;
+        border-radius: 12px;
     }
 
-    /* Gallery Styles */
+    .project-video-wrapper iframe {
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        border: 0;
+    }
+
+    /* Gallery */
     .project-gallery-section {
-        background: linear-gradient(135deg, rgba(218, 51, 34, 0.02) 0%, rgba(251, 209, 79, 0.02) 100%);
+        background: linear-gradient(135deg, rgba(218,51,34,0.02) 0%, rgba(251,209,79,0.02) 100%);
         padding: 3rem 0;
         margin-top: 2rem;
     }
@@ -140,12 +157,11 @@
         overflow: hidden;
         aspect-ratio: 4/3;
         cursor: pointer;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     }
 
     .gallery-card img {
-        width: 100%;
-        height: 100%;
+        width: 100%; height: 100%;
         object-fit: cover;
         transition: transform 0.4s ease;
     }
@@ -154,28 +170,17 @@
         content: '';
         position: absolute;
         inset: 0;
-        background: linear-gradient(
-            to bottom,
-            transparent 60%,
-            rgba(57, 14, 1, 0.7) 100%
-        );
+        background: linear-gradient(to bottom, transparent 60%, rgba(57,14,1,0.7) 100%);
         opacity: 0;
         transition: opacity 0.3s ease;
     }
 
-    .gallery-card:hover img {
-        transform: scale(1.08);
-    }
-
-    .gallery-card:hover::after {
-        opacity: 1;
-    }
+    .gallery-card:hover img { transform: scale(1.08); }
+    .gallery-card:hover::after { opacity: 1; }
 
     .gallery-card-overlay {
         position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
+        bottom: 0; left: 0; right: 0;
         padding: 1.25rem;
         z-index: 2;
         opacity: 0;
@@ -189,9 +194,8 @@
     }
 
     .gallery-zoom-icon {
-        width: 40px;
-        height: 40px;
-        background: rgba(255, 255, 255, 0.95);
+        width: 40px; height: 40px;
+        background: rgba(255,255,255,0.95);
         border-radius: 50%;
         display: flex;
         align-items: center;
@@ -201,32 +205,16 @@
         margin-left: auto;
     }
 
-    /* Breadcrumb Styling */
-    .project-breadcrumb {
-        background: transparent;
-        padding: 0;
-        margin: 0;
-    }
-
+    /* Breadcrumb */
     .project-breadcrumb .breadcrumb-item a {
-        color: rgba(255, 255, 255, 0.85);
+        color: rgba(255,255,255,0.85);
         text-decoration: none;
-        transition: color 0.2s ease;
     }
+    .project-breadcrumb .breadcrumb-item a:hover { color: white; }
+    .project-breadcrumb .breadcrumb-item.active { color: rgba(255,255,255,0.7); }
+    .project-breadcrumb .breadcrumb-item + .breadcrumb-item::before { color: rgba(255,255,255,0.5); }
 
-    .project-breadcrumb .breadcrumb-item a:hover {
-        color: white;
-    }
-
-    .project-breadcrumb .breadcrumb-item.active {
-        color: rgba(255, 255, 255, 0.7);
-    }
-
-    .project-breadcrumb .breadcrumb-item + .breadcrumb-item::before {
-        color: rgba(255, 255, 255, 0.5);
-    }
-
-    /* Back Button */
+    /* Back button */
     .back-to-projects {
         display: inline-flex;
         align-items: center;
@@ -236,43 +224,67 @@
         font-weight: 600;
         padding: 0.5rem 1rem;
         border-radius: 8px;
-        background: rgba(218, 51, 34, 0.08);
+        background: rgba(218,51,34,0.08);
         transition: all 0.3s ease;
     }
 
     .back-to-projects:hover {
-        background: rgba(218, 51, 34, 0.15);
+        background: rgba(218,51,34,0.15);
         color: var(--primary);
         transform: translateX(-4px);
     }
 
-    /* Responsive */
-    @media (max-width: 991px) {
-        .project-hero {
-            min-height: 350px;
-        }
+    /* Application form */
+    .apply-section {
+        background: linear-gradient(135deg, var(--primary) 0%, #a82519 100%);
+        border-radius: 16px;
+        padding: 2.5rem;
+        color: white;
+        margin-bottom: 1.5rem;
+    }
 
-        .project-hero-title {
-            font-size: 2rem;
-        }
+    .apply-section h2, .apply-section p { color: white !important; }
+
+    .apply-section .form-control,
+    .apply-section .form-select {
+        background: rgba(255,255,255,0.95);
+        border: none;
+    }
+
+    .deadline-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        background: rgba(251,209,79,0.2);
+        border: 1px solid var(--accent-yellow);
+        color: var(--accent-yellow);
+        border-radius: 20px;
+        padding: 0.3rem 0.85rem;
+        font-size: 0.875rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+    }
+
+    /* Success alert */
+    .alert-success-custom {
+        background: rgba(0,156,132,0.1);
+        border-left: 4px solid var(--secondary);
+        color: var(--text-dark);
+        border-radius: 8px;
+        padding: 1rem 1.25rem;
+    }
+
+    @media (max-width: 991px) {
+        .project-hero { min-height: 350px; }
+        .project-hero-title { font-size: 2rem; }
     }
 
     @media (max-width: 576px) {
-        .project-hero {
-            min-height: 300px;
-        }
-
-        .project-hero-title {
-            font-size: 1.65rem;
-        }
-
-        .project-section-card {
-            padding: 1.5rem;
-        }
-
-        .gallery-grid {
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-        }
+        .project-hero { min-height: 300px; }
+        .project-hero-title { font-size: 1.65rem; }
+        .project-section-card { padding: 1.5rem; }
+        .gallery-grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+        .apply-section { padding: 1.5rem; }
     }
 </style>
 @endpush
@@ -292,97 +304,176 @@
                     <li class="breadcrumb-item active" aria-current="page">{{ Str::limit($project->title, 40) }}</li>
                 </ol>
             </nav>
+
+            @if($project->event_date || $project->event_location)
+            <div class="project-event-info">
+                <i class="bi bi-calendar-event"></i>
+                @if($project->event_date) {{ $project->event_date->format('d M Y') }} @endif
+                @if($project->event_location) &mdash; {{ $project->event_location }} @endif
+            </div>
+            @endif
+
             <h1 class="project-hero-title">{{ $project->title }}</h1>
         </div>
     </div>
 </section>
 
+<!-- Flash message -->
+@if(session('success'))
+<div class="container mt-4">
+    <div class="alert-success-custom">
+        <i class="bi bi-check-circle-fill text-success me-2"></i>{{ session('success') }}
+    </div>
+</div>
+@endif
+
 <!-- Project Content -->
 <section class="section-padding">
     <div class="container">
-        <div class="row">
-            <!-- Main Content -->
-            <div class="col-lg-10 col-xl-8 mx-auto">
-                <!-- Back Button -->
-                <a href="{{ route('projects.index') }}" class="back-to-projects mb-4">
-                    <i class="bi bi-arrow-left"></i>
-                    Back to Projects
-                </a>
+        <!-- Back Button -->
+        <a href="{{ route('projects.index') }}" class="back-to-projects mb-4 d-inline-flex">
+            <i class="bi bi-arrow-left"></i>
+            Back to Projects
+        </a>
 
-                <!-- Description Card -->
-                <div class="project-section-card">
-                    <div class="project-section-header">
-                        <div class="project-section-icon">
-                            <i class="bi bi-file-text"></i>
-                        </div>
-                        <h2 class="project-section-title">About This Project</h2>
-                    </div>
-                    <div class="project-section-content">
-                        {!! $project->description !!}
-                    </div>
-                </div>
-
-                @if($project->objectives)
-                <!-- Objectives Card -->
-                <div class="project-section-card">
-                    <div class="project-section-header">
-                        <div class="project-section-icon">
-                            <i class="bi bi-bullseye"></i>
-                        </div>
-                        <h2 class="project-section-title">Objectives</h2>
-                    </div>
-                    <div class="project-section-content">
-                        {!! $project->objectives !!}
-                    </div>
-                </div>
-                @endif
-
-                @if($project->target_beneficiaries)
-                <!-- Target Beneficiaries Card -->
-                <div class="project-section-card">
-                    <div class="project-section-header">
-                        <div class="project-section-icon">
-                            <i class="bi bi-people"></i>
-                        </div>
-                        <h2 class="project-section-title">Target Beneficiaries</h2>
-                    </div>
-                    <div class="project-section-content">
-                        {!! $project->target_beneficiaries !!}
-                    </div>
-                </div>
-                @endif
-
-                @if($project->activities)
-                <!-- Activities Card -->
-                <div class="project-section-card">
-                    <div class="project-section-header">
-                        <div class="project-section-icon">
-                            <i class="bi bi-list-check"></i>
-                        </div>
-                        <h2 class="project-section-title">Activities</h2>
-                    </div>
-                    <div class="project-section-content">
-                        {!! $project->activities !!}
-                    </div>
-                </div>
-                @endif
-
-                @if($project->impact_summary)
-                <!-- Impact Summary Card -->
-                <div class="project-section-card">
-                    <div class="project-section-header">
-                        <div class="project-section-icon">
-                            <i class="bi bi-graph-up-arrow"></i>
-                        </div>
-                        <h2 class="project-section-title">Impact Summary</h2>
-                    </div>
-                    <div class="project-section-content">
-                        {!! $project->impact_summary !!}
-                    </div>
-                </div>
-                @endif
+        <!-- Description Card -->
+        <div class="project-section-card mt-3">
+            <div class="project-section-header">
+                <div class="project-section-icon"><i class="bi bi-file-text"></i></div>
+                <h2 class="project-section-title">About This Project</h2>
+            </div>
+            <div class="project-section-content">
+                {!! $project->description !!}
             </div>
         </div>
+
+        @if($project->video_embed_url)
+        <!-- Video Card -->
+        <div class="project-section-card">
+            <div class="project-section-header">
+                <div class="project-section-icon"><i class="bi bi-play-circle"></i></div>
+                <h2 class="project-section-title">Video</h2>
+            </div>
+            <div class="project-video-wrapper">
+                <iframe src="{{ $project->video_embed_url }}"
+                        allowfullscreen
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        title="{{ $project->title }} Video">
+                </iframe>
+            </div>
+        </div>
+        @endif
+
+        @if($project->objectives)
+        <div class="project-section-card">
+            <div class="project-section-header">
+                <div class="project-section-icon"><i class="bi bi-bullseye"></i></div>
+                <h2 class="project-section-title">Objectives</h2>
+            </div>
+            <div class="project-section-content">{!! $project->objectives !!}</div>
+        </div>
+        @endif
+
+        @if($project->target_beneficiaries)
+        <div class="project-section-card">
+            <div class="project-section-header">
+                <div class="project-section-icon"><i class="bi bi-people"></i></div>
+                <h2 class="project-section-title">Target Beneficiaries</h2>
+            </div>
+            <div class="project-section-content">{!! $project->target_beneficiaries !!}</div>
+        </div>
+        @endif
+
+        @if($project->activities)
+        <div class="project-section-card">
+            <div class="project-section-header">
+                <div class="project-section-icon"><i class="bi bi-list-check"></i></div>
+                <h2 class="project-section-title">Activities</h2>
+            </div>
+            <div class="project-section-content">{!! $project->activities !!}</div>
+        </div>
+        @endif
+
+        @if($project->impact_summary)
+        <div class="project-section-card">
+            <div class="project-section-header">
+                <div class="project-section-icon"><i class="bi bi-graph-up-arrow"></i></div>
+                <h2 class="project-section-title">Impact Summary</h2>
+            </div>
+            <div class="project-section-content">{!! $project->impact_summary !!}</div>
+        </div>
+        @endif
+
+        {{-- Application / Sign-up Section --}}
+        @if($project->allow_applications)
+        @php
+            $deadline = $project->application_deadline;
+            $deadlinePassed = $deadline && $deadline->isPast();
+        @endphp
+        <div id="apply" class="apply-section">
+            <h2 class="mb-2">
+                <i class="bi bi-pen me-2"></i>Apply / Sign Up
+            </h2>
+
+            @if($deadline)
+            <div class="deadline-badge">
+                <i class="bi bi-clock"></i>
+                @if($deadlinePassed)
+                    Applications closed on {{ $deadline->format('d M Y') }}
+                @else
+                    Deadline: {{ $deadline->format('d M Y') }}
+                @endif
+            </div>
+            @endif
+
+            @if($deadlinePassed)
+            <p class="opacity-75">Applications for this project/event are now closed.</p>
+            @elseif($project->application_form_url)
+            <p class="mb-4">Click the button below to access the application form.</p>
+            <a href="{{ $project->application_form_url }}" target="_blank" rel="noopener noreferrer"
+               class="btn btn-accent-yellow btn-lg">
+                <i class="bi bi-box-arrow-up-right me-2"></i>Open Application Form
+            </a>
+            @else
+            <p class="mb-4">Fill in the form below to register your interest or apply for this project/event.</p>
+            @if($errors->any())
+            <div class="alert alert-danger mb-3">
+                <ul class="mb-0">
+                    @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+            @endif
+            <form action="{{ route('projects.apply', $project->slug) }}" method="POST" id="project-apply-form">
+                @csrf
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">Full Name <span class="text-warning">*</span></label>
+                        <input type="text" name="name" class="form-control" value="{{ old('name') }}" required placeholder="Your full name">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">Email Address <span class="text-warning">*</span></label>
+                        <input type="email" name="email" class="form-control" value="{{ old('email') }}" required placeholder="you@example.com">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">Phone Number</label>
+                        <input type="tel" name="phone" class="form-control" value="{{ old('phone') }}" placeholder="+256 ...">
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label fw-semibold">Message / Motivation (optional)</label>
+                        <textarea name="message" class="form-control" rows="4" placeholder="Tell us a bit about yourself and why you'd like to join...">{{ old('message') }}</textarea>
+                    </div>
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-accent-yellow btn-lg">
+                            <i class="bi bi-send me-2"></i>Submit Application
+                        </button>
+                    </div>
+                </div>
+            </form>
+            @endif
+        </div>
+        @endif
     </div>
 </section>
 
@@ -424,18 +515,23 @@
     </div>
 </div>
 
+@push('scripts')
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const galleryCards = document.querySelectorAll('.gallery-card');
     const modalImg = document.getElementById('galleryModalImg');
-
     galleryCards.forEach(card => {
         card.addEventListener('click', function() {
-            const imgSrc = this.getAttribute('data-img');
-            modalImg.src = imgSrc;
+            modalImg.src = this.getAttribute('data-img');
         });
     });
 });
+
+handleFormSubmit('project-apply-form', {
+    successTitle: 'Application Submitted!',
+    successText: 'Your application has been received. We will be in touch soon.',
+});
 </script>
+@endpush
 @endif
 @endsection
