@@ -23,7 +23,8 @@ class ProjectController extends Controller
 
     public function show($slug)
     {
-        $project = Project::where('slug', $slug)
+        $project = Project::with(['galleryItems' => fn ($q) => $q->where('is_active', true)->orderBy('order')])
+            ->where('slug', $slug)
             ->where('is_active', true)
             ->firstOrFail();
 

@@ -538,7 +538,8 @@
 @endif
 
 <!-- Gallery Section -->
-@if($project->gallery_images_urls && count($project->gallery_images_urls) > 0)
+@php $activeGalleryItems = $project->galleryItems->where('is_active', true); @endphp
+@if($activeGalleryItems->count() > 0)
 <section class="project-gallery-section">
     <div class="container">
         <div class="text-center mb-4">
@@ -549,9 +550,9 @@
         </div>
 
         <div class="gallery-grid">
-            @foreach($project->gallery_images_urls as $index => $imageUrl)
-            <div class="gallery-card" data-bs-toggle="modal" data-bs-target="#galleryModal" data-img="{{ $imageUrl }}">
-                <img src="{{ $imageUrl }}" alt="Gallery Image {{ $index + 1 }}" loading="lazy">
+            @foreach($activeGalleryItems as $index => $galleryItem)
+            <div class="gallery-card" data-bs-toggle="modal" data-bs-target="#galleryModal" data-img="{{ $galleryItem->image_url }}">
+                <img src="{{ $galleryItem->image_url }}" alt="{{ $galleryItem->title ?? 'Gallery Image ' . ($index + 1) }}" loading="lazy">
                 <div class="gallery-card-overlay">
                     <div class="gallery-zoom-icon">
                         <i class="bi bi-zoom-in"></i>

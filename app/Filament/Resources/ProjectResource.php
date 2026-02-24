@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ProjectResource\Pages;
+use App\Filament\Resources\ProjectResource\RelationManagers\GalleryItemsRelationManager;
 use App\Models\Project;
 use Filament\Actions;
 use Filament\Forms;
@@ -102,12 +103,6 @@ class ProjectResource extends Resource
                             ->disk('public')
                             ->directory('projects')
                             ->columnSpanFull(),
-                        Forms\Components\FileUpload::make('gallery_images')
-                            ->image()
-                            ->multiple()
-                            ->disk('public')
-                            ->directory('projects/gallery')
-                            ->columnSpanFull(),
                         Forms\Components\TextInput::make('video_url')
                             ->label('Video URL')
                             ->url()
@@ -197,7 +192,7 @@ class ProjectResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            GalleryItemsRelationManager::class,
         ];
     }
 
