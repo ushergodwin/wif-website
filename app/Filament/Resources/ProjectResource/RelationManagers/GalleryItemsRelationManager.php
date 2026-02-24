@@ -80,7 +80,7 @@ class GalleryItemsRelationManager extends RelationManager
                 Actions\DeleteAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\DeleteBulkAction::make(),
+                Actions\DeleteBulkAction::make(),
             ]);
     }
 }
