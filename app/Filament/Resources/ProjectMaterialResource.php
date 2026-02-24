@@ -120,8 +120,8 @@ class ProjectMaterialResource extends Resource
                 Tables\Filters\TernaryFilter::make('is_active')->label('Visible'),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Actions\EditAction::make(),
+                Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
